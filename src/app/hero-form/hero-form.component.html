@@ -1,0 +1,44 @@
+<form [formGroup]="heroForm" (ngSubmit)="onSubmit()">
+  <div style="margin-bottom: 1em">
+    <button type="submit"
+            [disabled]="heroForm.pristine" class="btn btn-success">Save
+    </button> &nbsp;
+    <button type="button" (click)="revert()"
+            [disabled]="heroForm.pristine" class="btn btn-danger">Revert
+    </button>
+  </div>
+
+  <!-- Hero Detail Controls -->
+  <div class="form-group">
+    <label class="center-block">Name:
+      <input class="form-control" formControlName="name">
+    </label>
+  </div>
+
+  <div formArrayName="powers" class="well well-lg">
+    <div *ngFor="let pow of powers.controls; let i=index">
+      <!-- The repeated power template -->
+      <h4>Potere #{{i + 1}}</h4>
+      <div style="margin-left: 1em;">
+
+        <div class="form-group">
+          <label class="center-block">Power:
+            <select class="form-control" [formControlName]="i">
+              <option *ngFor="let pow of allPowers" [ngValue]="pow">{{pow.name}}</option>
+            </select>
+          </label>
+        </div>
+
+      </div>
+      <br>
+      <!-- End of the repeated address template -->
+    </div>
+    <button (click)="addPowerChoice()" type="button">Add a Power</button>
+  </div>
+
+</form>
+
+<p>heroForm value: {{ heroForm.value | json}}</p>
+
+<h4>Name change log</h4>
+<div *ngFor="let name of nameChangeLog">{{name}}</div>
